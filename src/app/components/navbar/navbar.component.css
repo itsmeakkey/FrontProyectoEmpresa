@@ -1,0 +1,45 @@
+/* Barra de navegación fija */
+.navbar {
+    top: 0;       
+    left: 0;
+    width: 100%;   
+    background-color: #d7ebf4;
+    justify-content: center;
+    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.4); /* Sombra solo en la parte inferior */
+}
+
+/* Lista de navegación */
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center; 
+}
+
+
+
+/* Enlaces de la navegación */
+.navbar ul li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Efecto al pasar el ratón sobre los enlaces */
+.navbar ul li a:hover {
+    background-color: #c3d6df;
+
+}
+
+/* Página activa */
+.navbar ul li a.active {
+    font-weight: bold;
+    background-color: #c3d6df;
+    color: black; 
+}
+
+

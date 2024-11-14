@@ -1,0 +1,13 @@
+/* Encabezado */
+header {
+    background-color: #c3d6df;
+    color: gray;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+header a{
+    text-decoration: none;
+}
+
