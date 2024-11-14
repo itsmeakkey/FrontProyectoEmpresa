@@ -1,1 +1,7 @@
-<p>departamentos works!</p>
+
+<h1>Departamentos</h1>
+<ul>
+    <li *ngFor="let dpto of departamentos">
+        {{dpto.nombre}} | {{dpto.jefe.nombre}}
+    </li>
+</ul>
