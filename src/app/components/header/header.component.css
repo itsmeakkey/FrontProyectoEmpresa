@@ -7,7 +7,7 @@ header {
     position: relative;
 }
 
-header a{
-    text-decoration: none;
+header h1{
+    color: rgb(87, 87, 87);
 }
 

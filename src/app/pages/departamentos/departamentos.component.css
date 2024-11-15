@@ -1,0 +1,60 @@
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 40%;
+    border-collapse: collapse;
+    margin: 20px auto; /*Espacio arriba y espacio abajo*/
+}
+
+thead {
+    background-color: #ddd;
+}
+
+th {
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/*Esto son las filas pares*/
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+/*Estas las impares*/
+tbody tr:nth-child(odd) {
+    background-color: #fff;}
+
+/* Columna de acciones */
+td:nth-child(4) {
+    background-color: #f4f5d1;
+}
+
+button {
+    padding: 5px 10px;
+    border: none;
+    margin: 0 5px;
+}
+
+/* Botón Editar */
+button:first-child {
+    background-color: #f4f5d1;
+    color: black;
+}
+
+/* Botón Eliminar */
+button:last-child {
+    background-color: #f28b82;
+    color: white;
+}

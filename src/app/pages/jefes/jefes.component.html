@@ -1,1 +1,28 @@
-<p>jefes works!</p>
+<h1>Listado de Jefes</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Fecha de alta</th>
+            <th>Fecha de baja</th>
+            <th>Salario</th>
+            <th>Fecha Jefe</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody><!--Esto lo cambiamos para adaptarlo a empleados-->
+        <tr *ngFor="let jefe of jefes">
+            <td>{{jefe.nombre }}</td>
+            <td>{{jefe.edad }}</td>
+            <td>{{jefe.fechaAlta }}</td>
+            <td>{{jefe.fechaBaja }}</td>
+            <td>{{jefe.salario }}</td>
+            <td>{{jefe.fechaJefe}}</td>
+            <td>
+                <button>Editar</button>
+                <button>Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>

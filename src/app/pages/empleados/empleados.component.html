@@ -1,1 +1,29 @@
-<p>empleados works!</p>
+<h1>Listado de Empleados</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Fecha de alta</th>
+            <th>Fecha de baja</th>
+            <th>Salario</th>
+            <th>Departamento asignado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of empleados">
+            <td>{{emp.nombre }}</td>
+            <td>{{emp.edad }}</td>
+            <td>{{emp.fechaAlta }}</td>
+            <td>{{emp.fechaBaja }}</td>
+            <td>{{emp.salario }}</td>
+            <td>{{emp.departamento?.nombre}}</td>
+
+            <td>
+                <button>Editar</button>
+                <button>Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>

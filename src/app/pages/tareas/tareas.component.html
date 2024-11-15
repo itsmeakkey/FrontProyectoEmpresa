@@ -1,1 +1,29 @@
-<p>tareas works!</p>
+<h1>Listado de Tareas</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Fecha Creación</th>
+            <th>Fecha Fin</th>
+            <th>¿Entregado a tiempo?</th>
+            <th>Fecha Estimada</th>
+            <th>Asignado a</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let tar of tareas">
+            <td>{{tar.nombre }}</td>
+            <td>{{tar.fechaCreacion }}</td>
+            <td>{{tar.fechaFin }}</td>
+            <td>{{tar.entregadoATiempo }}</td>
+            <td>{{tar.fechaEstimada }}</td>
+            <td>{{tar.empleado.nombre}}</td>
+            <td>
+                <button>Editar</button>
+                <button>Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+

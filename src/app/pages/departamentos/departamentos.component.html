@@ -1,7 +1,20 @@
-
-<h1>Departamentos</h1>
-<ul>
-    <li *ngFor="let dpto of departamentos">
-        {{dpto.nombre}} | {{dpto.jefe.nombre}}
-    </li>
-</ul>
+<h1>Listado de Departamentos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Jefe</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let dpto of departamentos">
+            <td>{{dpto.nombre }}</td>
+            <td>{{ dpto.jefe.nombre }}</td>
+            <td>
+                <button>Editar</button>
+                <button>Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>
