@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Trabajador } from '../../models/trabajador';
 import { CommonModule } from '@angular/common';
+import { JefeService } from '../../services/jefe.service';
 
 @Component({
   selector: 'app-jefes',
@@ -9,18 +10,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './jefes.component.html',
   styleUrl: './jefes.component.css'
 })
-export class JefesComponent {
-  //Creamos los jefes
-  static jefe1: Trabajador = new Trabajador('David', 25, new Date('2023-05-05'), null, 2000, 'Jefe', new Date('2023-06-05'));
-  static jefe2: Trabajador = new Trabajador('Juan', 22, new Date('2024-05-05'), null, 1000, 'Jefe', new Date('2024-06-05'));
-  static jefe3: Trabajador = new Trabajador('Pepe', 23, new Date('2024-07-05'), null, 1300, 'Jefe', new Date('2024-06-08'));
-  static jefe4: Trabajador = new Trabajador('Antonio', 24, new Date('2024-01-05'), null, 1200, 'Jefe', new Date('2024-06-05'));
+export class JefesComponent implements OnInit {
+//Creamos un array de jefes
+jefes: Trabajador[] = [];
 
-  //Los insertamos en un array
-  jefes: Trabajador[] = [
-    JefesComponent.jefe1,
-    JefesComponent.jefe2,
-    JefesComponent.jefe3,
-    JefesComponent.jefe4
-  ];
+  constructor(private jefeService: JefeService) {}
+  ngOnInit(): void {
+    this.getAllJefes(); //Cuando cargue el componente, hacemos la llamada para mostrar todos los empleados
+  }
+  //Método que llama al servicio y pasa los datos a un array
+  getAllJefes(): void {
+    this.jefeService.getAllJefes().subscribe({
+      next: (data) => {
+        this.jefes = data; //Metemos los datos en el array
+      }
+    });
+  }
+
 }

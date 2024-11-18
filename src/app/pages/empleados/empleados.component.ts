@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Trabajador } from '../../models/trabajador';
 import { DepartamentosComponent } from '../departamentos/departamentos.component';
+import { EmpleadoService } from '../../services/empleado.service';
 @Component({
   selector: 'app-empleados',
   standalone: true,
@@ -9,19 +10,24 @@ import { DepartamentosComponent } from '../departamentos/departamentos.component
   templateUrl: './empleados.component.html',
   styleUrl: './empleados.component.css'
 })
-export class EmpleadosComponent {
+export class EmpleadosComponent implements OnInit { //OnInit nos permite por ejemplo: cargar empleados al iniciar el componente
+//Creamos un array de empeados
+empleados: Trabajador[] = [];
 
-//Creamos los empleados
-static emp1: Trabajador = new Trabajador('Ana', 25, new Date('2023-05-05'), null, 2000, 'Empleado', null, DepartamentosComponent.depar);
-static emp2: Trabajador = new Trabajador('Maria', 22, new Date('2024-05-05'), null, 1000, 'Empleado',null, DepartamentosComponent.it );
-static emp3: Trabajador = new Trabajador('Victoria', 23, new Date('2024-07-05'), null, 1300, 'Empleado',null, DepartamentosComponent.recursosHumanos  );
-static emp4: Trabajador = new Trabajador('Lucia', 24, new Date('2024-01-05'), null, 1200, 'Empleado', null, DepartamentosComponent.finanzas  );
+constructor(private empleadoService: EmpleadoService) {}
+  ngOnInit(): void {
+    this.getAllEmpleados(); //Cuando cargue el componente, hacemos la llamada para mostrar todos los empleados
+  }
 
-//Los insertamos en un array
-empleados: Trabajador[] = [
-  EmpleadosComponent.emp1,
-  EmpleadosComponent.emp2,
-  EmpleadosComponent.emp3,
-  EmpleadosComponent.emp4
-];
+  // Obtener todos los empleados del servicio
+  getAllEmpleados(): void {
+    this.empleadoService.getAllEmpleados().subscribe({
+      next: (data) => {
+        this.empleados = data; //Metemos los datos en el array
+      }
+    });
+  }
+
+
+
 }

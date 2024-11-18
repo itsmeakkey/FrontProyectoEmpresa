@@ -1,63 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Trabajador } from '../../models/trabajador';
 import { CommonModule } from '@angular/common';
+import { TareaService } from '../../services/tarea.service';
 import { Tarea } from '../../models/tarea';
-import { EmpleadosComponent } from '../empleados/empleados.component';
 
 @Component({
   selector: 'app-tareas',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './tareas.component.html',
-  styleUrls: ['./tareas.component.css']
+  styleUrl: './tareas.component.css'
 })
-export class TareasComponent {
-  //Creamos las tareas con un empleado concreto asignado
-  static tar1: Tarea = {
-    nombre: 'Administrar Bases de Datos',
-    fechaCreacion: new Date('2023-05-05'),
-    fechaFin: null,
-    entregadoATiempo: true,
-    fechaEstimada: new Date('2023-05-05'),
-    empleado: EmpleadosComponent.emp1
-  };
+export class TareasComponent implements OnInit {
+//Creamos un array de Tareas
+tareas: Tarea[] = [];
 
-  static tar2: Tarea = {
-    nombre: 'Programación Backend',
-    fechaCreacion: new Date('2023-05-05'),
-    fechaFin: null,
-    entregadoATiempo: true,
-    fechaEstimada: new Date('2023-05-05'),
-    empleado: EmpleadosComponent.emp2
-  };
-
-  static tar3: Tarea = {
-    nombre: 'Diseño Frontend',
-    fechaCreacion: new Date('2023-05-05'),
-    fechaFin: null,
-    entregadoATiempo: true,
-    fechaEstimada: new Date('2023-05-05'),
-    empleado: EmpleadosComponent.emp3
-  };
-
-  static tar4: Tarea = {
-    nombre: 'Testing',
-    fechaCreacion: new Date('2023-05-05'),
-    fechaFin: null,
-    entregadoATiempo: true,
-    fechaEstimada: new Date('2023-05-05'),
-    empleado: EmpleadosComponent.emp4
-  };
-
-  tareas: Tarea[]; // Creamos el array de tareas
-
-  constructor() {
-    this.tareas = [
-      TareasComponent.tar1,
-      TareasComponent.tar2,
-      TareasComponent.tar3,
-      TareasComponent.tar4
-    ];
+  constructor(private tareaService: TareaService) {}
+  ngOnInit(): void {
+    this.getAllTareas(); //Cuando cargue el componente, hacemos la llamada para mostrar todos los empleados
   }
+  //Método que obtiene las tareas del servicio
+  getAllTareas(): void {
+    this.tareaService.getAllTareas().subscribe({
+      next: (data) => {
+        this.tareas = data; //Metemos los datos en el array
+      }
+    });
+  }
+
 }
-
-

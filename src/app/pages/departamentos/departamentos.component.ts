@@ -1,42 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DepartamentoService } from '../../services/departamento.service';
 import { Departamento } from '../../models/departamento';
 import { CommonModule } from '@angular/common';
-import { JefesComponent } from '../jefes/jefes.component';
-
 
 @Component({
   selector: 'app-departamentos',
   standalone: true,
-  imports: [CommonModule, JefesComponent],
+  imports: [CommonModule],
   templateUrl: './departamentos.component.html',
-  styleUrl: './departamentos.component.css'
+  styleUrls: ['./departamentos.component.css'],
 })
-export class DepartamentosComponent {
-  //Hemos creado los departamentos con static para poder usarlos de campo en empleado. Con jefe ha pasado igual.
-  static depar: Departamento = {
-    nombre: 'Depar',
-    jefe: JefesComponent.jefe1
-  };
-  static recursosHumanos: Departamento = {
-    nombre: 'Recursos Humanos',
-    jefe: JefesComponent.jefe2
-  };
-  static finanzas: Departamento = {
-    nombre: 'Finanzas',
-    jefe: JefesComponent.jefe4
-  };
-  static it: Departamento = {
-    nombre: 'IT',
-    jefe: JefesComponent.jefe3
+export class DepartamentosComponent implements OnInit {
+  departamentos: Departamento[] = []; //Array de departamentos
+
+  constructor(private departamentoService: DepartamentoService) {}
+  ngOnInit(): void {
+    this.getAllDepartamentos(); //Obtenemos todos los departamentos al iniciar el componente
   }
 
-  departamentos: Departamento[];//Array de departamentos
-  constructor() {
-    this.departamentos = [
-      DepartamentosComponent.depar,
-      DepartamentosComponent.recursosHumanos,
-      DepartamentosComponent.finanzas,
-      DepartamentosComponent.it
-    ];
+  // Método para obtener los departamentos
+  getAllDepartamentos(): void {
+    this.departamentoService.getAllDepartamentos().subscribe({
+      next: (data) => {
+        this.departamentos = data; //Asignamos los datos al array
+      }
+    });
   }
 }

@@ -13,12 +13,12 @@
     </thead>
     <tbody>
         <tr *ngFor="let tar of tareas">
-            <td>{{tar.nombre }}</td>
+            <td>{{tar.nombreTarea}}</td>
             <td>{{tar.fechaCreacion }}</td>
             <td>{{tar.fechaFin }}</td>
             <td>{{tar.entregadoATiempo }}</td>
             <td>{{tar.fechaEstimada }}</td>
-            <td>{{tar.empleado.nombre}}</td>
+            <td>{{tar.empleadoTO.nombre}}</td>
             <td>
                 <button>Editar</button>
                 <button>Eliminar</button>

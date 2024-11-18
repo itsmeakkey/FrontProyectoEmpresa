@@ -37,7 +37,7 @@ tbody tr:nth-child(odd) {
     background-color: #fff;}
 
 /* Columna de fechaBaja */
-td:nth-child(4) {
+td:nth-child(3) {
     background-color: #f4f5d1;
 }
 

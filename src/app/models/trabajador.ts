@@ -3,26 +3,30 @@ import { Departamento } from "./departamento";
 export class Trabajador {
     nombre: string;
     edad: number;
-    fechaAlta: Date;
-    fechaBaja: Date | null; //Null porque puede ser que mi trabajador no esté de baja.
+    fechaAlta: string;
+    fechaBaja: string | null;
     salario: number;
     rol: string;
-    //Campo adicional de Jefe
-    fechaJefe?: Date | null; //Es un optional, porque puede no ser un jefe.
-    //Campo adicional de empleado
-    departamento?: Departamento;
+    fechaJefe?: string | null;
+    departamentoTO?: Departamento;
 
-    constructor(nombre: string, edad: number, fechaAlta: Date, fechaBaja: Date | null, salario: number, rol: string, fechaJefe?: Date | null, departamento?: Departamento) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.fechaAlta = fechaAlta;
-        this.fechaBaja = fechaBaja;
-        this.salario = salario;
-        this.rol = rol;
-        if (rol == 'Jefe') { //Si el rol es Jefe, se usa fechaJefe.
-            this.fechaJefe = fechaJefe;
-        } else if (rol === 'Empleado') {//Si el rol es Empleado, se usa departamento.
-            this.departamento = departamento;
+    //Estamos usando Partial porque el objeto tiene propiedades opcionales en función del rol
+    constructor(data: Partial<Trabajador>) {
+        this.nombre = data.nombre || '';
+        this.edad = data.edad || 0;
+        this.fechaAlta = data.fechaAlta || '';
+        this.fechaBaja = data.fechaBaja || null;
+        this.salario = data.salario || 0;
+
+        //Con esto determinamos el rol en función de los campos que tenga
+        if (data.fechaJefe) {
+            this.rol = 'Jefe';
+            this.fechaJefe = data.fechaJefe;
+        } else if (data.departamentoTO) {
+            this.rol = 'Empleado';
+            this.departamentoTO = data.departamentoTO;
+        } else {
+            this.rol = 'Desconocido'; //Por si no fuera ninguno.
         }
     }
 }

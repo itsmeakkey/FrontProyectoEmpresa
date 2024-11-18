@@ -1,11 +1,11 @@
 import { Trabajador } from "./trabajador";
 
 export interface Tarea {
-    nombre: string;
+    nombreTarea: string;
     fechaCreacion: Date;
     fechaFin: Date | null; //Null porque puede no haber terminado la tarea.
     entregadoATiempo: boolean;
     fechaEstimada: Date;
     
-    empleado: Trabajador;
+    empleadoTO: Trabajador;
 }
