@@ -11,10 +11,10 @@ import { EmpleadoService } from '../../services/empleado.service';
   styleUrl: './empleados.component.css'
 })
 export class EmpleadosComponent implements OnInit { //OnInit nos permite por ejemplo: cargar empleados al iniciar el componente
-//Creamos un array de empeados
-empleados: Trabajador[] = [];
+  //Creamos un array de empeados
+  empleados: Trabajador[] = [];
 
-constructor(private empleadoService: EmpleadoService) {}
+  constructor(private empleadoService: EmpleadoService) { }
   ngOnInit(): void {
     this.getAllEmpleados(); //Cuando cargue el componente, hacemos la llamada para mostrar todos los empleados
   }

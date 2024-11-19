@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class DepartamentosComponent implements OnInit {
   departamentos: Departamento[] = []; //Array de departamentos
 
-  constructor(private departamentoService: DepartamentoService) {}
+  constructor(private departamentoService: DepartamentoService) { }
   ngOnInit(): void {
     this.getAllDepartamentos(); //Obtenemos todos los departamentos al iniciar el componente
   }
