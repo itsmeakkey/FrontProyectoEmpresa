@@ -23,10 +23,7 @@ export class JefesComponent implements OnInit {
     this.getAllJefes(); //Cuando cargue el componente, hacemos la llamada al back para mostrar todos los empleados
 
   }
-  //Para probar el botón
-  decirHola(): void {
-    console.log('FUNCIONA!');
-  }
+
   // Método para abrir el formulario de creación
   abrirFormularioCrear(): void {
     this.mostrarFormulario = true;
@@ -43,19 +40,33 @@ export class JefesComponent implements OnInit {
 
   // Método para crear un nuevo jefe
   crearJefe(): void {
-    if (this.nuevoJefe.nombre && this.nuevoJefe.edad && this.nuevoJefe.salario) {
-      this.jefeService.createJefe(this.nuevoJefe).subscribe({
-        next: (jefeCreado) => {
-          console.log('Jefe creado exitosamente:', jefeCreado);
-          this.jefes.push(jefeCreado); // Añade el nuevo jefe a la lista
-          this.cerrarFormulario(); // Cierra el formulario tras guardar
+    console.log('Valores del formulario:', this.nuevoJefe); // Depurar valores antes de enviar
+  
+    this.jefeService.createJefe(this.nuevoJefe).subscribe({
+      next: (jefeCreado) => {
+        alert('Jefe creado exitosamente');
+        this.jefes.push(jefeCreado);
+        this.cerrarFormulario();
+      },
+      error: (err) => console.error('Error al crear el jefe:', err),
+    });
+  }
+  
+  //Eliminar un jefe 
+  deleteJefe(id: number): void {
+    if (confirm('¿Estás seguro de que quieres eliminar este jefe?')) {
+      this.jefeService.deleteJefe(id).subscribe({ //Llamada al servicio
+        next: () => {
+          alert('Jefe eliminado correctamente');
+          //Quita de la tabla el jefe eliminado
+          this.jefes = this.jefes.filter(jefe => jefe.id !== id);
         },
-        error: (err) => console.error('Error al crear el jefe:', err)
+        error: (err) => alert('Error al eliminar'),
       });
-    } else {
-      console.error('Por favor, completa todos los campos obligatorios.');
     }
   }
+  
+
   //Método que llama al servicio y pasa los datos a un array
   getAllJefes(): void {
     this.jefeService.getAllJefes().subscribe({

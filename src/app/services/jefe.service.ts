@@ -28,7 +28,7 @@ export class JefeService {
 
 //Crear un Jefe
   createJefe(jefe: Trabajador): Observable<Trabajador>{
-    return this.http.put<Trabajador>(this.apiURL, jefe)
+    return this.http.post<Trabajador>(this.apiURL, jefe)
   }
 
 //Actualizar un Jefe

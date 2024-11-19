@@ -1,56 +1,70 @@
 <h1>Listado de Jefes</h1>
 
-<!--Botón para probar llamada a métodos-->
-<div>
-    <button type="button" (click)="decirHola()">Enviar</button></div>
-<!-- Formulario de creación, por defecto va a estar oculto -->
-<div *ngIf="mostrarFormulario" class="form-container">
-    <form (ngSubmit)="crearJefe()">
+
+  
+  <!-- Fondo difuminado y modal -->
+  <div *ngIf="mostrarFormulario" class="modal-container">
+    <!-- Fondo difuminado -->
+    <div class="modal-backdrop" (click)="cerrarFormulario()"></div>
+  
+    <!-- Contenido del modal -->
+    <div class="modal-content form-container">
+      <form (ngSubmit)="crearJefe()">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" [(ngModel)]="nuevoJefe.nombre" name="nombre" required />
-
+  
         <label for="edad">Edad:</label>
         <input type="number" id="edad" [(ngModel)]="nuevoJefe.edad" name="edad" required />
-
+  
         <label for="salario">Salario:</label>
         <input type="number" id="salario" [(ngModel)]="nuevoJefe.salario" name="salario" required />
-
+  
         <label for="fechaAlta">Fecha de Alta:</label>
         <input type="date" id="fechaAlta" [(ngModel)]="nuevoJefe.fechaAlta" name="fechaAlta" required />
-
+  
         <label for="fechaJefe">Fecha de Jefe:</label>
-        <input type="date" id="fechaJefe" [(ngModel)]="nuevoJefe.fechaJefe" name="fechaJefe" />
-
-        <!-- Guardar/Cancelar -->
+        <input type="date" id="fechaJefe" [(ngModel)]="nuevoJefe.fechaJefe" name="fechaJefe" required />
+  
+        <!-- Guardar/Cancelar --><br><br>
         <button type="submit">Guardar</button>
         <button type="button" (click)="cerrarFormulario()">Cancelar</button>
-    </form>
-</div>
+      </form>
+    </div>
+  </div>
+  
 
-<table>
+<!-- Botón de Crear Jefe -->
+<div class="create-jefe-container">
+    <button type="button" class="create-jefe-button" (click)="abrirFormularioCrear()">Crear Jefe</button>
+  </div>
+  
+  <!-- Tabla -->
+  <table>
+
     <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Fecha de alta</th>
-            <th>Fecha de baja</th>
-            <th>Salario</th>
-            <th>Fecha Jefe</th>
-            <th>Acciones</th>
-        </tr>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Fecha de alta</th>
+        <th>Fecha de baja</th>
+        <th>Salario</th>
+        <th>Fecha Jefe</th>
+        <th>Acciones</th>
+      </tr>
     </thead>
-    <tbody><!--Esto lo cambiamos para adaptarlo a empleados-->
-        <tr *ngFor="let jefe of jefes">
-            <td>{{jefe.nombre }}</td>
-            <td>{{jefe.edad }}</td>
-            <td>{{jefe.fechaAlta }}</td>
-            <td>{{jefe.fechaBaja }}</td>
-            <td>{{jefe.salario }}</td>
-            <td>{{jefe.fechaJefe}}</td>
-            <td>
-                <button>Editar</button>
-                <button>Eliminar</button>
-            </td>
-        </tr>
+    <tbody>
+      <tr *ngFor="let jefe of jefes">
+        <td>{{jefe.nombre }}</td>
+        <td>{{jefe.edad }}</td>
+        <td>{{jefe.fechaAlta }}</td>
+        <td>{{jefe.fechaBaja }}</td>
+        <td>{{jefe.salario }}</td>
+        <td>{{jefe.fechaJefe}}</td>
+        <td>
+          <button>Editar</button>
+          <button (click)="deleteJefe(jefe.id)" >Eliminar</button>
+        </td>
+      </tr>
     </tbody>
-</table>
+  </table>
+  
