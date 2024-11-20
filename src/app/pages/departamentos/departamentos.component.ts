@@ -45,7 +45,7 @@ export class DepartamentosComponent implements OnInit {
   // Guardar un departamento (crear o editar)
   saveDepartamento(): void {
     const datosEnviados = {
-      ...this.nuevoDepartamento,
+      ...this.nuevoDepartamento, //Clona el departamento
       jefeTO: { ...this.nuevoDepartamento.jefeTO }, // Envía el objeto completo
     };
 
@@ -81,7 +81,7 @@ export class DepartamentosComponent implements OnInit {
   }
 
   // Eliminar un departamento
-  eliminarDepartamento(id: number): void {
+  deleteDepartamento(id: number): void {
     if (confirm('¿Estás seguro de que quieres eliminar este departamento?')) {
       this.departamentoService.deleteDepartamento(id).subscribe({
         next: () => {
@@ -107,19 +107,7 @@ export class DepartamentosComponent implements OnInit {
 
   // Abrir el formulario para crear un departamento
   abrirFormularioCrear(): void {
-    this.nuevoDepartamento = {
-      id: 0,
-      nombre: '',
-      jefeTO: new Trabajador({
-        id: 0,
-        nombre: '',
-        edad: 0,
-        fechaAlta: null,
-        fechaBaja: null,
-        salario: 0,
-        rol: 'Jefe',
-      })
-    }
+    this.nuevoDepartamento;
     this.mostrarFormulario = true;
   }
 
@@ -143,19 +131,7 @@ export class DepartamentosComponent implements OnInit {
 
   // Cerrar el formulario
   cerrarFormulario(): void {
-    this.nuevoDepartamento = { //Esto resetea el formulario
-      id: 0,
-      nombre: '',
-      jefeTO: new Trabajador({
-        id: 0,
-        nombre: '',
-        edad: 0,
-        fechaAlta: null,
-        fechaBaja: null,
-        salario: 0,
-        rol: 'Jefe',
-      })
-    }
+    this.nuevoDepartamento;
     this.mostrarFormulario = false;
   }
 

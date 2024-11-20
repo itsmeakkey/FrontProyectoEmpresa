@@ -1,4 +1,9 @@
 <h1>Listado de Empleados</h1>
+
+<!-- Botón para Crear Empleado -->
+<div class="create-empleado-container">
+    <button type="button" class="create-empleado-button" (click)="abrirFormularioCrear()">Crear Empleado</button>
+</div>
 <table>
     <thead>
         <tr>
@@ -21,9 +26,53 @@
             <td>{{emp.departamentoTO?.nombre}}</td>
 
             <td>
-                <button>Editar</button>
-                <button>Eliminar</button>
+                <button (click)="abrirFormularioEditar(emp)">Editar</button>
+                <button (click)="deleteEmpleado(emp.id)">Eliminar</button>
             </td>
         </tr>
     </tbody>
-    </table>
+</table>
+
+<!-- Modal para Crear/Editar Empleado -->
+<div *ngIf="mostrarFormulario" class="modal-container">
+    <!-- Fondo difuminado -->
+    <div class="modal-backdrop" (click)="cerrarFormulario()"></div>
+
+    <!-- Contenido del modal -->
+    <div class="modal-content form-container">
+        <form (ngSubmit)="saveEmpleado()">
+            <!-- Campo Nombre -->
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Escribe el nombre" [(ngModel)]="nuevoEmpleado.nombre"
+                name="nombre" required />
+
+            <!-- Campo Edad -->
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" placeholder="Escribe la edad" [(ngModel)]="nuevoEmpleado.edad" name="edad"
+                required />
+
+            <!-- Campo Fecha de Alta -->
+            <label for="fechaAlta">Fecha de Alta:</label>
+            <input type="date" id="fechaAlta" [(ngModel)]="nuevoEmpleado.fechaAlta" name="fechaAlta" required />
+
+            <!-- Campo Salario -->
+            <label for="salario">Salario:</label>
+            <input type="number" id="salario" placeholder="Escribe el salario" [(ngModel)]="nuevoEmpleado.salario"
+                name="salario" required />
+
+            <!-- Selección de Departamento -->
+            <label for="departamento">Departamento:</label>
+            <select id="departamento" [(ngModel)]="nuevoEmpleado.departamentoId" name="departamento" required>
+                <option value="" disabled selected>Seleccione un departamento</option>
+                <option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                    {{ departamento.nombre }}
+                </option>
+            </select>
+
+            <!-- Botones Guardar/Cancelar -->
+            <br /><br />
+            <button type="submit">Guardar</button>
+            <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+        </form>
+    </div>
+</div>

@@ -20,7 +20,7 @@
             <td>{{ dpto.jefeTO.nombre || 'Sin Jefe Asignado' }}</td>
             <td>
                 <button (click)="abrirFormularioEditar(dpto)">Editar</button>
-                <button (click)="eliminarDepartamento(dpto.id)">Eliminar</button>
+                <button (click)="deleteDepartamento(dpto.id)">Eliminar</button>
             </td>
         </tr>
     </tbody>
