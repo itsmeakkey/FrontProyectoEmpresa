@@ -14,32 +14,38 @@ export class JefeService {
   //Un observable es como un mensajero, desde el servicio enviamos datos al componente cuando estén preparados.
 
 
-//Métodos de Jefe
+  //Métodos de Jefe
 
-//Obtener todos los Jefes
+  //Crear un Jefe
+  createJefe(jefe: Trabajador): Observable<Trabajador> {
+    return this.http.post<Trabajador>(this.apiURL, jefe)
+  }
+
+  //Eliminar un Jefe
+  deleteJefe(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiURL}/${id}`);
+  }
+
+  //Actualizar un Jefe
+  updateJefe(id: number, jefe: Trabajador): Observable<Trabajador> {
+    return this.http.put<Trabajador>(`${this.apiURL}/${id}`, jefe);
+  }
+  
+  //Obtener todos los Jefes
   getAllJefes(): Observable<Trabajador[]> {
     return this.http.get<Trabajador[]>(this.apiURL);
   }
 
-//Obtener los Jefes por ID
-  getJefeById(id: number): Observable<Trabajador>{
-    return this.http.get<Trabajador>(`${this.apiURL}/${id}`) 
+  //Obtener los Jefes por ID
+  getJefeById(id: number): Observable<Trabajador> {
+    return this.http.get<Trabajador>(`${this.apiURL}/${id}`)
   }
 
-//Crear un Jefe
-  createJefe(jefe: Trabajador): Observable<Trabajador>{
-    return this.http.post<Trabajador>(this.apiURL, jefe)
-  }
 
-//Actualizar un Jefe
-  updateJefe(id: number, jefe:Trabajador): Observable<Trabajador>{
-    return this.http.put<Trabajador>(`${this.apiURL}/${id}`, jefe);
-  }
 
-//Eliminar un Jefe
-  deleteJefe(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiURL}/${id}`);
-  }
+
+
+
 
 
 

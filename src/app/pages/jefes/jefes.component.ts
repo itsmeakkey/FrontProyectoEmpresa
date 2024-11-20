@@ -17,41 +17,46 @@ export class JefesComponent implements OnInit {
   //Creamos un array de jefes
   jefes: Trabajador[] = [];
 
-
   constructor(private jefeService: JefeService) { }
   ngOnInit(): void {
     this.getAllJefes(); //Cuando cargue el componente, hacemos la llamada al back para mostrar todos los empleados
-
   }
 
-  // Método para abrir el formulario de creación
-  abrirFormularioCrear(): void {
+  //CRUD
+
+  // Método para crear o actualizar un nuevo jefe
+  saveJefe(): void {
+    // Si el id existe actualizamos, si no, creamos uno nuevo
+    if (this.nuevoJefe.id) {
+      // Actualización
+      this.jefeService.updateJefe(this.nuevoJefe.id, this.nuevoJefe).subscribe({
+        next: () => {
+          alert('Jefe actualizado correctamente');
+          this.getAllJefes();
+          this.cerrarFormulario();
+        },
+        error: (err) => alert('Error al actualizar jefe.'),
+      });
+    } else {
+      // Creación
+      this.jefeService.createJefe(this.nuevoJefe).subscribe({
+        next: (jefeCreado) => {
+          alert('Jefe creado correctamente');
+          this.jefes.push(jefeCreado);
+          this.cerrarFormulario();
+        },
+        error: (err) => alert('Error al crear el jefe.'),
+      });
+    }
+  }
+
+  //Método para actualizar un jefe
+  //Recoger los datos del jefe en el formulario
+  editJefe(jefe: Trabajador): void {
     this.mostrarFormulario = true;
-    this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
-    console.log('Formulario abierto para crear un nuevo jefe.');
-  }
+    this.nuevoJefe = { ...jefe };//Realiza una copia de jefe para trabajar con sus datos
 
-  // Método para cerrar el formulario sin guardar
-  cerrarFormulario(): void {
-    this.mostrarFormulario = false;
-    this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
-    console.log('Formulario cerrado.');
   }
-
-  // Método para crear un nuevo jefe
-  crearJefe(): void {
-    console.log('Valores del formulario:', this.nuevoJefe); // Depurar valores antes de enviar
-  
-    this.jefeService.createJefe(this.nuevoJefe).subscribe({
-      next: (jefeCreado) => {
-        alert('Jefe creado exitosamente');
-        this.jefes.push(jefeCreado);
-        this.cerrarFormulario();
-      },
-      error: (err) => console.error('Error al crear el jefe:', err),
-    });
-  }
-  
   //Eliminar un jefe 
   deleteJefe(id: number): void {
     if (confirm('¿Estás seguro de que quieres eliminar este jefe?')) {
@@ -65,9 +70,23 @@ export class JefesComponent implements OnInit {
       });
     }
   }
-  
+  //----------------------------------------------------------------------------------------
 
-  //Método que llama al servicio y pasa los datos a un array
+  // Método para abrir el formulario de creación
+  abrirFormularioCrear(): void {
+    this.mostrarFormulario = true;
+    this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
+
+  }
+
+  // Método para cerrar el formulario sin guardar
+  cerrarFormulario(): void {
+    this.mostrarFormulario = false;
+    this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
+
+  }
+
+  //Método que llama al servicio y trae todos los jefes
   getAllJefes(): void {
     this.jefeService.getAllJefes().subscribe({
       next: (data) => {
@@ -75,6 +94,5 @@ export class JefesComponent implements OnInit {
       }
     });
   }
-
 
 }

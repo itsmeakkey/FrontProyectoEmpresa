@@ -41,20 +41,5 @@ td:nth-child(4) {
     background-color: #f4f5d1;
 }
 
-button {
-    padding: 5px 10px;
-    border: none;
-    margin: 0 5px;
-}
 
-/* Botón Editar */
-button:first-child {
-    background-color: #f4f5d1;
-    color: black;
-}
 
-/* Botón Eliminar */
-button:last-child {
-    background-color: #f28b82;
-    color: white;
-}

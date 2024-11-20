@@ -27,7 +27,16 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
       }
     });
   }
+  //CRUD
 
+  // Guardar un empleado (crear o editar)
+  
+
+
+
+
+
+  //Eliminar un empleado 
 
 
 }
