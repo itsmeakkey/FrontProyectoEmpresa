@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { backendConfig } from '../../../backend-config';
 import { Trabajador } from '../models/trabajador';
+import { EmpleadoDTO } from '../models/empleadoDTO';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -27,13 +28,13 @@ export class EmpleadoService {
   }
 
 //Crear un empleado
-  createEmpleado(empleado: Trabajador): Observable<Trabajador>{
-    return this.http.put<Trabajador>(this.apiURL, empleado)
-  }
+createEmpleado(empleado: EmpleadoDTO): Observable<EmpleadoDTO> {
+  return this.http.post<EmpleadoDTO>(`${this.apiURL}`, empleado);
+}
 
 //Actualiar un empleado
-  updateEmpleado(id: number, empleado:Trabajador): Observable<Trabajador>{
-    return this.http.put<Trabajador>(`${this.apiURL}/${id}`, empleado);
+  updateEmpleado(id: number, empleado:EmpleadoDTO): Observable<EmpleadoDTO>{
+    return this.http.put<EmpleadoDTO>(`${this.apiURL}/${id}`, empleado);
   }
 
 //Eliminar un empleado

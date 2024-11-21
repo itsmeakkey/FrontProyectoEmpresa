@@ -1,29 +1,75 @@
 <h1>Listado de Tareas</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Fecha Creación</th>
-            <th>Fecha Fin</th>
-            <th>¿Entregado a tiempo?</th>
-            <th>Fecha Estimada</th>
-            <th>Asignado a</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let tar of tareas">
-            <td>{{tar.nombreTarea}}</td>
-            <td>{{tar.fechaCreacion }}</td>
-            <td>{{tar.fechaFin }}</td>
-            <td>{{tar.entregadoATiempo }}</td>
-            <td>{{tar.fechaEstimada }}</td>
-            <td>{{tar.empleadoTO.nombre}}</td>
-            <td>
-                <button>Editar</button>
-                <button>Eliminar</button>
-            </td>
-        </tr>
-    </tbody>
-    </table>
 
+<div *ngIf="mostrarFormulario" class="modal-container">
+  <div class="modal-backdrop" (click)="cerrarFormulario()"></div>
+
+  <!-- Contenido del modal -->
+  <div class="modal-content form-container">
+   <form (ngSubmit)="saveTarea()">
+      <label for="nombreTarea">Nombre de la Tarea:</label>
+      <input type="text" id="nombreTarea" [(ngModel)]="nuevaTarea.nombreTarea" name="nombreTarea" required />
+
+      <label for="fechaCreacion">Fecha de Creación:</label>
+      <input type="date" id="fechaCreacion" [(ngModel)]="nuevaTarea.fechaCreacion" name="fechaCreacion" required />
+
+      <label for="fechaFin">Fecha de Finalización:</label>
+      <input type="date" id="fechaFin" [(ngModel)]="nuevaTarea.fechaFin" name="fechaFin" />
+
+      <label for="entregadoATiempo">¿Entregado a Tiempo?</label>
+      <select id="entregadoATiempo" [(ngModel)]="nuevaTarea.entregadoATiempo" name="entregadoATiempo">
+        <option [value]="true">Sí</option>
+        <option [value]="false">No</option>
+      </select>
+
+      <label for="fechaEstimada">Fecha Estimada:</label>
+      <input type="date" id="fechaEstimada" [(ngModel)]="nuevaTarea.fechaEstimada" name="fechaEstimada" required />
+
+      <label for="asignadoA">Asignado a:</label>
+<select id="asignadoA" [(ngModel)]="nuevaTarea.empleadoTO.id" name="asignadoA" required>
+    <option *ngFor="let empleado of empleados" [value]="empleado.id">
+        {{ empleado.nombre }}
+    </option>
+</select>
+
+      <!-- Botones Guardar y Cancelar -->
+      <br><br>
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="cerrarFormulario()">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+<!-- Botón para crear tarea -->
+<div class="create-tarea-container">
+  <button type="button" class="create-tarea-button" (click)="abrirFormularioCrear()">Crear Tarea</button>
+</div>
+
+<!-- Tabla de tareas -->
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Fecha Creación</th>
+      <th>Fecha Fin</th>
+      <th>¿Entregado a tiempo?</th>
+      <th>Fecha Estimada</th>
+      <th>Asignado a</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tarea of tareas">
+      <td>{{ tarea.nombreTarea }}</td>
+      <td>{{ tarea.fechaCreacion }}</td>
+      <td>{{ tarea.fechaFin }}</td>
+      <td>{{ tarea.entregadoATiempo ? 'Sí' : 'No' }}</td>
+      <td>{{ tarea.fechaEstimada }}</td>
+      <td>{{ tarea.empleadoTO.nombre || 'Sin asignar' }}</td>
+      <td>
+        <!-- Botones Editar y Eliminar -->
+     <button (click)="abrirFormularioEditar(tarea)">Editar</button> 
+        <button (click)="deleteTarea(tarea.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

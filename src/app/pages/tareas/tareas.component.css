@@ -7,7 +7,7 @@ h1 {
 table {
     width: 60%;
     border-collapse: collapse;
-    margin: 20px auto; /*Espacio arriba y espacio abajo*/
+    margin: 20px auto; 
 }
 
 thead {
@@ -41,20 +41,155 @@ td:nth-child(3) {
     background-color: #f4f5d1;
 }
 
-button {
-    padding: 5px 10px;
-    border: none;
-    margin: 0 5px;
-}
 
-/* Botón Editar */
-button:first-child {
-    background-color: #f4f5d1;
-    color: black;
-}
 
-/* Botón Eliminar */
-button:last-child {
-    background-color: #f28b82;
+/*BOTÓN CREAR TAREA*/
+/* Contenedor del botón */
+.create-tarea-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  /* Botón estilizado */
+  .create-tarea-button {
+    display: block;
+    width: 50%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
     color: white;
-}
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.1s ease;
+  }
+  
+  /* Hover y foco */
+  .create-tarea-button:hover {
+    background-color: #218838;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  
+  /* Fondo difuminado */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+  }
+  
+  /* Contenedor del modal */
+  .modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Estilo del modal */
+  .modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
+    max-width: 500px;
+    width: 90%;
+    font-family: 'Roboto', Arial, sans-serif;
+    z-index: 1001;
+    overflow: hidden;
+  }
+  
+  /* Encabezado del modal */
+  .modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333333;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  /* Etiquetas del formulario */
+  .modal-content label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #555555;
+    font-weight: 400;
+  }
+  
+  /* Campos del formulario */
+  .modal-content input {
+    width: 93%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #333333;
+    background: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .modal-content input:focus {
+    border-color: #007BFF;
+    background: #ffffff;
+  }
+  
+  /* Botones del modal */
+  .modal-content button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .modal-content button[type="submit"] {
+    background-color: #007BFF;
+    color: white;
+  }
+  
+  .modal-content button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-content button[type="button"] {
+    background-color: #dddddd;
+    color: #333333;
+  }
+  
+  .modal-content button[type="button"]:hover {
+    background-color: #bbbbbb;
+  }
+  
+  /* Animación para aparecer */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

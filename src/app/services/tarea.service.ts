@@ -28,7 +28,7 @@ export class TareaService {
 
 //Crear una Tarea
   createTarea(tarea: Tarea): Observable<Tarea>{
-    return this.http.put<Tarea>(this.apiURL, tarea)
+    return this.http.post<Tarea>(this.apiURL, tarea)
   }
 
 //Actualizar una Tarea

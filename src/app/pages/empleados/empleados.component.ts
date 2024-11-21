@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Trabajador } from '../../models/trabajador';
 import { Departamento } from '../../models/departamento';
+import { EmpleadoDTO } from '../../models/empleadoDTO';
 import { FormsModule } from '@angular/forms';
 import { DepartamentoService } from '../../services/departamento.service';
 import { EmpleadoService } from '../../services/empleado.service';
+
 @Component({
   selector: 'app-empleados',
   standalone: true,
@@ -15,8 +17,9 @@ import { EmpleadoService } from '../../services/empleado.service';
 
 export class EmpleadosComponent implements OnInit { //OnInit nos permite por ejemplo: cargar empleados al iniciar el componente
   departamentos: Departamento[] = []; // Lista de departamentos
-  empleados: Trabajador[] = []; //Lista de empleados
+  empleados: Trabajador[] = [];
   mostrarFormulario: boolean = false;
+  departamentoId: number = 0;
   nuevoEmpleado: Trabajador = new Trabajador({
     id: 0,
     nombre: '',
@@ -25,7 +28,6 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     fechaBaja: null,
     salario: 0,
     rol: 'Empleado', // Es un empleado por defecto
-    departamentoId: '',
     departamentoTO: {
       id: 0,
       nombre: '',
@@ -46,43 +48,80 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
 
 
   //CRUD
-  // Guardar un empleado (crear o editar)
   saveEmpleado(): void {
-    if (!this.nuevoEmpleado.departamentoTO?.id) { //Te aseguras de que existe el id
-      alert('Por favor, selecciona un empleado válido.');
+    //Primero, buscamos el departamento 
+    const departamentoSeleccionado = this.departamentos.find(
+      (departamento) => departamento.id === Number(this.departamentoId)  // Nos aseguramos que ambos sean números
+    );
+
+    //Si no seleccionas departamento.
+    if (!departamentoSeleccionado) {
+      alert('Selecciona un departamento antes.');
       return;
     }
-    const datosEnviados = {
-      ...this.nuevoEmpleado, //Clona el empleado
-      departamentoTO: { ...this.nuevoEmpleado.departamentoTO }, // Envía el objeto completo
+
+    // Creo el objeto empleadoDTO con el JSON que necesita el backend
+    const empleadoDTO: EmpleadoDTO = {
+      nombre: this.nuevoEmpleado.nombre,
+      edad: this.nuevoEmpleado.edad,
+      fechaAlta: this.nuevoEmpleado.fechaAlta,
+      fechaBaja: this.nuevoEmpleado.fechaBaja,
+      salario: this.nuevoEmpleado.salario,
+      departamentoTO: {
+        id: departamentoSeleccionado.id,  // Solo enviamos el id 
+      },
     };
 
+
+    // Si el empleado tiene un id, es una actualización
     if (this.nuevoEmpleado.id) {
-      // Actualización
-      this.empleadoService.updateEmpleado(this.nuevoEmpleado.id, datosEnviados).subscribe({
+      this.empleadoService.updateEmpleado(this.nuevoEmpleado.id, empleadoDTO).subscribe({
         next: () => {
           alert('Empleado actualizado correctamente');
-          this.getAllEmpleados(); //Recargamos las listas
+          this.getAllEmpleados();  // Recargamos las listas
           this.cerrarFormulario();
         },
-        error: (err) => alert('Error al actualizar el empleado:'),
+        error: (err) => alert('Error al actualizar el empleado: ' + JSON.stringify(err)),
       });
     } else {
-      // Creación
-      this.empleadoService.createEmpleado(datosEnviados).subscribe({
-        next: (empleadoCreado) => {
+      // Si no tiene id, es una creación
+      this.empleadoService.createEmpleado(empleadoDTO).subscribe({
+        next: (empleadoCreado: any) => {
+          const trabajadorCreado: Trabajador = {
+            id: empleadoCreado.id || 0,
+            nombre: empleadoCreado.nombre,
+            edad: empleadoCreado.edad,
+            fechaAlta: empleadoCreado.fechaAlta,
+            fechaBaja: empleadoCreado.fechaBaja,
+            salario: empleadoCreado.salario,
+            rol: 'Empleado',
+            departamentoTO: this.departamentos.find(
+              (d) => d.id === empleadoCreado.departamentoTO?.id
+            ) || { id: 0, nombre: '', jefeTO: { id: 0, nombre: '', edad: 0, fechaAlta: null, fechaBaja: null, salario: 0, rol: 'Jefe' } },
+          };
           alert('Empleado creado correctamente');
-          this.empleados.push(empleadoCreado); // Añadimos el nuevo empleado
+          this.empleados.push(trabajadorCreado);  // Añadimos el nuevo empleado
           this.cerrarFormulario();
+          // Limpiamos los datos para crear un nuevo empleado
+          this.nuevoEmpleado = {
+            id: 0,
+            nombre: '',
+            edad: 0,
+            fechaAlta: null,
+            fechaBaja: null,
+            salario: 0,
+            rol: 'Empleado',
+            departamentoTO: {
+              id: 0,
+              nombre: '',
+              jefeTO: { id: 0, nombre: '', edad: 0, fechaAlta: null, fechaBaja: null, salario: 0, rol: 'Jefe' },
+            },
+          };
         },
-        error: (err) => alert('Error al crear el empleado:'),
-      });
+        error: (err) => alert('Error al crear el empleado: ' + err),
+      })
     }
   }
-
-
-
-
 
   //Eliminar un empleado 
   deleteEmpleado(id: number): void {
@@ -96,10 +135,6 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
       });
     }
   }
-
-
-
-
 
 
   //-------------------------------------------------------------------------------------------
@@ -121,15 +156,27 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     });
   }
 
-
-
-  // Abrir formulario para crear empleado
+  // Formulario para crear empleado
   abrirFormularioCrear(): void {
-    this.nuevoEmpleado;
+    // Limpiar los datos para crear un nuevo empleado
+    this.nuevoEmpleado = {
+      id: 0,
+      nombre: '',
+      edad: 0,  // Asignar un valor por defecto como 0
+      fechaAlta: null,
+      fechaBaja: null,
+      salario: 0,  // Asignar un valor por defecto como 0
+      rol: 'Empleado',
+      departamentoTO: {
+        id: 0,
+        nombre: '',
+        jefeTO: { id: 0, nombre: '', edad: 0, fechaAlta: null, fechaBaja: null, salario: 0, rol: 'Jefe' },
+      },
+    };
     this.mostrarFormulario = true;
   }
 
-  // Abrir el formulario para editar un departamento
+  // Formulario para editar un departamento
   abrirFormularioEditar(emp: Trabajador): void {
     this.nuevoEmpleado = new Trabajador({
       id: emp.id,
@@ -158,9 +205,24 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
 
     this.mostrarFormulario = true;
   }
+
   // Cerrar formulario
   cerrarFormulario(): void {
-    this.nuevoEmpleado;
+    // Limpiamos los datos para crear un nuevo empleado
+    this.nuevoEmpleado = {
+      id: 0,
+      nombre: '',
+      edad: 0,  
+      fechaAlta: null,
+      fechaBaja: null,
+      salario: 0,  
+      rol: 'Empleado',
+      departamentoTO: {
+        id: 0,
+        nombre: '',
+        jefeTO: { id: 0, nombre: '', edad: 0, fechaAlta: null, fechaBaja: null, salario: 0, rol: 'Jefe' },
+      },
+    };
     this.mostrarFormulario = false;
   }
 
