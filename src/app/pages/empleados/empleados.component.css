@@ -149,6 +149,31 @@ td:nth-child(4) {
     border-color: #007BFF; 
     background: #ffffff;
   }
+  .modal-content select {
+    width: 97.5%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #333333;
+    background: #f9f9f9;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><polygon points="0,0 10,0 5,7" fill="%23333333"/></svg>');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    background-size: 10px;
+  }
+
+  /* Cambia el borde al enfocar */
+.modal-content select:focus {
+  border-color: #007BFF;
+}
+
  
   /* Botones del modal */
   .modal-content button {
