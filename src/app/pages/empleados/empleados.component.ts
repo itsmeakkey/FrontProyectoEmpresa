@@ -35,7 +35,6 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     },
   });
 
-
   constructor(
     private empleadoService: EmpleadoService,
     private departamentoService: DepartamentoService
@@ -45,7 +44,6 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     this.getAllEmpleados(); //Cuando cargue el componente, hacemos la llamada para mostrar todos los empleados
     this.getAllDepartametos(); //Para poder cargarlos en el select
   }
-
 
   //CRUD
   saveEmpleado(): void {
@@ -212,10 +210,10 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     this.nuevoEmpleado = {
       id: 0,
       nombre: '',
-      edad: 0,  
+      edad: 0,
       fechaAlta: null,
       fechaBaja: null,
-      salario: 0,  
+      salario: 0,
       rol: 'Empleado',
       departamentoTO: {
         id: 0,
@@ -226,7 +224,79 @@ export class EmpleadosComponent implements OnInit { //OnInit nos permite por eje
     this.mostrarFormulario = false;
   }
 
-}
+  //----------------------------------------------------------------
+  /*BÚSQUEDAS*/
+  searchByName(): void {
+    if (!this.nuevoEmpleado.nombre.trim()) {
+      this.getAllEmpleados();
+      return;
+    }
+    this.empleadoService.searchByName(this.nuevoEmpleado.nombre).subscribe({
+      next: (result) => (this.empleados = result),
+    });
+  }
 
+  //Por edad
+  searchByEdad(): void {
+    // Si el campo de búsqueda está vacío, mostramos una lista
+    if (!this.nuevoEmpleado.edad) {
+      this.getAllEmpleados();
+      return;
+    }
+
+    this.empleadoService.searchByEdad(this.nuevoEmpleado.edad).subscribe({
+      next: (result) => (this.empleados = result),
+    });
+  }
+
+  //MÉTODOS DE BÚSQUEDA POR SALARIO
+  //Esto lo hemos hecho para que no referencien al mismo atributo salario, y así no duplicar el input en ambos
+  salarioSuperior: number | null = null;
+  salarioInferior: number | null = null;
+
+  // Por salario superior a x
+  searchBySuperiorASalario(): void { //Si no hay salario, se muestra toda la lista.
+    if (this.salarioSuperior === null) {
+      this.getAllEmpleados();
+      return;
+    }
+
+    this.empleadoService.searchBySuperiorASalario(this.salarioSuperior).subscribe({
+      next: (result) => (this.empleados = result),
+    });
+  }
+
+  // Por salario superior a x
+  searchByInferiorASalario(): void {
+    if (this.salarioInferior === null) {
+      this.getAllEmpleados();
+      return;
+    }
+
+    this.empleadoService.searchByInferiorASalario(this.salarioInferior).subscribe({
+      next: (result) => (this.empleados = result),
+    });
+  }
+  //Variables para el salario mínimo y el máximo
+  salarioMinimo: number = 0;
+  salarioMaximo: number = 0;
+
+  // Entre salarios
+  buscarPorRangoDeSalarios(): void {
+    // Verificamos que no sean nulos y que el mínimo nunca puede ser mayor que máximo
+    if (this.salarioMinimo !== null && this.salarioMaximo !== null && this.salarioMinimo > this.salarioMaximo) {
+      alert('Introduce salarios válidos.');
+      return;
+    }
+
+    // Llamamos al servicio para realizar la búsqueda
+    this.empleadoService.findByEntreSalarios(this.salarioMinimo, this.salarioMaximo).subscribe({
+      next: (empleados) => {
+        this.empleados = empleados;
+      },
+    });
+  }
+
+}
 
 

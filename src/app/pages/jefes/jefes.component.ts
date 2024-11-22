@@ -75,14 +75,12 @@ export class JefesComponent implements OnInit {
   abrirFormularioCrear(): void {
     this.mostrarFormulario = true;
     this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
-
   }
 
   // Método para cerrar el formulario sin guardar
   cerrarFormulario(): void {
     this.mostrarFormulario = false;
     this.nuevoJefe = new Trabajador({ rol: 'Jefe' }); // Resetea el formulario
-
   }
 
   //Método que llama al servicio y trae todos los jefes
@@ -125,39 +123,37 @@ export class JefesComponent implements OnInit {
 
   //MÉTODOS DE BÚSQUEDA POR SALARIO
   //Esto lo hemos hecho para que no referencien al mismo atributo salario, y así no duplicar el input en ambos
-  salarioSuperior: number | null = null; 
-  salarioInferior: number | null = null; 
-  
+  salarioSuperior: number | null = null;
+  salarioInferior: number | null = null;
+
   // Por salario superior a x
   searchBySuperiorASalario(): void { //Si no hay salario, se muestra toda la lista.
     if (this.salarioSuperior === null) {
       this.getAllJefes();
       return;
     }
-  
+
     this.jefeService.searchBySuperiorASalario(this.salarioSuperior).subscribe({
       next: (result) => (this.jefes = result),
     });
   }
-  
+
   // Por salario superior a x
   searchByInferiorASalario(): void {
     if (this.salarioInferior === null) {
       this.getAllJefes();
       return;
     }
-  
+
     this.jefeService.searchByInferiorASalario(this.salarioInferior).subscribe({
       next: (result) => (this.jefes = result),
     });
   }
-  
-
 
   //Variables para el salario mínimo y el máximo
-  salarioMinimo: number = 0; 
-  salarioMaximo: number = 0; 
-  
+  salarioMinimo: number = 0;
+  salarioMaximo: number = 0;
+
   // Entre salarios
   buscarPorRangoDeSalarios(): void {
     // Verificamos que no sean nulos y que el mínimo nunca puede ser mayor que máximo
@@ -165,8 +161,7 @@ export class JefesComponent implements OnInit {
       alert('Introduce salarios válidos.');
       return;
     }
-    
-  
+
     // Llamamos al servicio para realizar la búsqueda
     this.jefeService.findByEntreSalarios(this.salarioMinimo, this.salarioMaximo).subscribe({
       next: (jefes) => {
@@ -174,5 +169,4 @@ export class JefesComponent implements OnInit {
       },
     });
   }
-  
 }

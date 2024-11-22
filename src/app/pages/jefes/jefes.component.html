@@ -56,21 +56,18 @@
   </div>
 
   <!-- Campo de búsqueda entre salarios -->
-  <div >
+  <div>
     <p>Busca jefes con salario entre:</p>
     <input type="number" [(ngModel)]="salarioMinimo" placeholder="Salario mínimo" />
     <input type="number" [(ngModel)]="salarioMaximo" placeholder="Salario máximo" />
     <button (click)="buscarPorRangoDeSalarios()">Buscar</button>
   </div>
-</div><br/>
-
+</div><br />
 
 <!-- Botón crear jefe -->
 <div class="create-jefe-container">
   <button type="button" class="create-jefe-button" (click)="abrirFormularioCrear()">Crear Jefe</button>
 </div>
-
-
 
 <!-- Tabla -->
 <table>

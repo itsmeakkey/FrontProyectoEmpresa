@@ -44,7 +44,7 @@ export class TareasComponent implements OnInit {
   }
 
   //CRUD
-  // Guardar una departamento 
+  // Guardar una departamento
   saveTarea(): void {
     const datosEnviados = {
       ...this.nuevaTarea,
@@ -74,7 +74,6 @@ export class TareasComponent implements OnInit {
     }
   }
 
-
   //Método que obtiene las tareas del servicio
   getAllTareas(): void {
     this.tareaService.getAllTareas().subscribe({
@@ -100,7 +99,6 @@ export class TareasComponent implements OnInit {
 
   //----------------------------------------------------------------------------------------
 
-
   // Obtener todos los empleados
   getAllEmpleados(): void {
     this.empleadoService.getAllEmpleados().subscribe({
@@ -111,7 +109,22 @@ export class TareasComponent implements OnInit {
 
   // Abrir el formulario de creación nueva tarea
   abrirFormularioCrear(): void {
-    this.nuevaTarea;
+    this.nuevaTarea = {
+      id: 0,
+      nombreTarea: '',
+      fechaCreacion: new Date(),
+      fechaFin: null,
+      entregadoATiempo: false,
+      fechaEstimada: new Date(),
+      empleadoTO: new Trabajador({
+        id: 0,
+        nombre: '',
+        edad: 0,
+        salario: 0,
+        fechaAlta: null,
+        fechaBaja: null
+      }),
+    };
     this.mostrarFormulario = true;
   }
 
@@ -138,7 +151,88 @@ export class TareasComponent implements OnInit {
   }
   // Cerrar el formulario
   cerrarFormulario(): void {
-    this.nuevaTarea;
+    this.nuevaTarea = {
+      id: 0,
+      nombreTarea: '',
+      fechaCreacion: new Date(),
+      fechaFin: null,
+      entregadoATiempo: false,
+      fechaEstimada: new Date(),
+      empleadoTO: new Trabajador({
+        id: 0,
+        nombre: '',
+        edad: 0,
+        salario: 0,
+        fechaAlta: null,
+        fechaBaja: null
+      }),
+    };
     this.mostrarFormulario = false
+  }
+
+  /*MÉTODOS DE BÚSQUEDA*/
+  // Variables para las búsquedas por fecha
+  fechaAntes: Date = new Date();
+  fechaDespues: Date = new Date();
+  fechaInicio: Date = new Date();
+  fechaFin: Date = new Date();
+  //Tareas entregadas a tiempo
+  getTareasEntregaATiempo(): void {
+    this.tareaService.getTareasEntregaATiempo().subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('Error al filtrar tareas entregadas a tiempo: ' + err.message),
+    });
+  }
+
+  //Tareas que no se han entregado a tiempo
+  getTareasEntregaADestiempo(): void {
+    this.tareaService.getTareasEntregaADestiempo().subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('No se han encontrado fechas'),
+    });
+  }
+
+  // Filtrar tareas no terminadas
+  getTareasNoFinalizadas(): void {
+    this.tareaService.getTareasNoFinalizadas().subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('No se han encontrado fechas'),
+    });
+  }
+
+  //Tareas antes de una fecha
+  getTareasFechaCreacionAnterior(fecha: Date): void {
+    this.tareaService.getTareasFechaCreacionAnterior(fecha).subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('No se han encontrado fechas'),
+    });
+  }
+
+  //Tareas después de una fecha
+  getTareasFechaCreacionDespues(fecha: Date): void {
+    this.tareaService.getTareasFechaCreacionDespues(fecha).subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('No se han encontrado fechas'),
+    });
+  }
+
+  // Filtrar tareas entre fechas
+  getTareasFechaCreacionEntre(fechaInicio: Date, fechaFin: Date): void {
+    this.tareaService.getTareasFechaCreacionEntre(fechaInicio, fechaFin).subscribe({
+      next: (data) => {
+        this.tareas = data;
+      },
+      error: (err) => alert('No se han encontrado fechas'),
+    });
   }
 }

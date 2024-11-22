@@ -1,38 +1,5 @@
 <h1>Listado de Empleados</h1>
 
-<!-- Botón para Crear Empleado -->
-<div class="create-empleado-container">
-    <button type="button" class="create-empleado-button" (click)="abrirFormularioCrear()">Crear Empleado</button>
-</div>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Fecha de alta</th>
-            <th>Fecha de baja</th>
-            <th>Salario</th>
-            <th>Departamento asignado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let emp of empleados">
-            <td>{{emp.nombre }}</td>
-            <td>{{emp.edad }}</td>
-            <td>{{emp.fechaAlta }}</td>
-            <td>{{emp.fechaBaja }}</td>
-            <td>{{emp.salario }}</td>
-            <td>{{emp.departamentoTO?.nombre}}</td>
-
-            <td>
-                <button (click)="abrirFormularioEditar(emp)">Editar</button>
-                <button (click)="deleteEmpleado(emp.id)">Eliminar</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
 <!-- Modal para Crear/Editar Empleado -->
 <div *ngIf="mostrarFormulario" class="modal-container">
     <!-- Fondo difuminado -->
@@ -76,3 +43,72 @@
         </form>
     </div>
 </div>
+
+<!--Campo de búsqueda por nombre-->
+<div class="busquedas">
+
+    <!-- Campo de búsqueda por nombre -->
+    <div>
+        <p>Busca por nombre:</p>
+        <input type="text" [(ngModel)]="nuevoEmpleado.nombre" (input)="searchByName()" />
+    </div>
+
+    <!-- Campo de búsqueda por edad -->
+    <div>
+        <p>Busca por edad:</p>
+        <input type="number" [(ngModel)]="nuevoEmpleado.edad" (input)="searchByEdad()" />
+    </div>
+
+    <!-- Campo de búsqueda por salario superior a x -->
+    <div>
+        <p>Busca por salario superior a:</p>
+        <input type="number" [(ngModel)]="salarioSuperior" (input)="searchBySuperiorASalario()" />
+    </div>
+
+    <!-- Campo de búsqueda por salario inferior a x -->
+    <div>
+        <p>Busca por salario inferior a:</p>
+        <input type="number" [(ngModel)]="salarioInferior" (input)="searchByInferiorASalario()" />
+    </div>
+
+    <!-- Campo de búsqueda entre salarios -->
+    <div>
+        <p>Busca jefes con salario entre:</p>
+        <input type="number" [(ngModel)]="salarioMinimo" placeholder="Salario mínimo" />
+        <input type="number" [(ngModel)]="salarioMaximo" placeholder="Salario máximo" />
+        <button (click)="buscarPorRangoDeSalarios()">Buscar</button>
+    </div>
+</div><br />
+
+<!-- Botón para Crear Empleado -->
+<div class="create-empleado-container">
+    <button type="button" class="create-empleado-button" (click)="abrirFormularioCrear()">Crear Empleado</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Fecha de alta</th>
+            <th>Fecha de baja</th>
+            <th>Salario</th>
+            <th>Departamento asignado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of empleados">
+            <td>{{emp.nombre }}</td>
+            <td>{{emp.edad }}</td>
+            <td>{{emp.fechaAlta }}</td>
+            <td>{{emp.fechaBaja }}</td>
+            <td>{{emp.salario }}</td>
+            <td>{{emp.departamentoTO?.nombre}}</td>
+
+            <td>
+                <button (click)="abrirFormularioEditar(emp)">Editar</button>
+                <button (click)="deleteEmpleado(emp.id)">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

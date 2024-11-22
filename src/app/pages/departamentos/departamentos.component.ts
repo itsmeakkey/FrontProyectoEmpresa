@@ -96,7 +96,6 @@ export class DepartamentosComponent implements OnInit {
   //----------------------------------------------------------------------------------------
 
 
-
   // Obtener todos los jefes
   getAllJefes(): void {
     this.jefeService.getAllJefes().subscribe({

@@ -12,7 +12,6 @@ export class DepartamentoService {
 
   constructor(private http: HttpClient) { }
 
-
   getAllDepartamentos(): Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.apiURL);
   }

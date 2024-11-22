@@ -1,11 +1,53 @@
 <h1>Listado de Tareas</h1>
 
+<div class="busquedas">
+  <!-- Campo de búsqueda de tareas entregadas a tiempo -->
+  <div>
+    <p>Busca tareas entregadas a tiempo:</p>
+    <button (click)="getTareasEntregaATiempo()">Buscar</button>
+  </div>
+
+  <!-- Campo de búsqueda de tareas entregadas fuera de tiempo -->
+  <div>
+    <p>Busca tareas entregadas fuera de tiempo:</p>
+    <button (click)="getTareasEntregaADestiempo()">Buscar</button>
+  </div>
+
+  <!-- Campo de búsqueda por tareas no finalizadas -->
+  <div>
+    <p>Busca tareas no finalizadas:</p>
+    <button (click)="getTareasNoFinalizadas()">Buscar</button>
+  </div>
+
+  <!-- Campo de búsqueda por tareas antes de una fecha -->
+  <div>
+    <p>Busca tareas antes de una fecha:</p>
+    <input type="date" [(ngModel)]="fechaAntes" />
+    <button (click)="getTareasFechaCreacionAnterior(fechaAntes)">Buscar</button>
+  </div>
+
+  <!-- Campo de búsqueda por tareas después de una fecha -->
+  <div>
+    <p>Busca tareas después de una fecha:</p>
+    <input type="date" [(ngModel)]="fechaDespues" />
+    <button (click)="getTareasFechaCreacionDespues(fechaDespues)">Buscar</button>
+  </div>
+
+  <!-- Campo de búsqueda por tareas entre dos fechas -->
+  <div>
+    <p>Busca tareas entre dos fechas:</p>
+    <input type="date" [(ngModel)]="fechaInicio" placeholder="Fecha de inicio" />
+    <input type="date" [(ngModel)]="fechaFin" placeholder="Fecha de fin" />
+    <button (click)="getTareasFechaCreacionEntre(fechaInicio, fechaFin)">Buscar</button>
+  </div>
+</div><br />
+
 <div *ngIf="mostrarFormulario" class="modal-container">
   <div class="modal-backdrop" (click)="cerrarFormulario()"></div>
 
-  <!-- Contenido del modal -->
+  <!-- Modal -->
   <div class="modal-content form-container">
-   <form (ngSubmit)="saveTarea()">
+    <form (ngSubmit)="saveTarea()">
       <label for="nombreTarea">Nombre de la Tarea:</label>
       <input type="text" id="nombreTarea" [(ngModel)]="nuevaTarea.nombreTarea" name="nombreTarea" required />
 
@@ -25,11 +67,11 @@
       <input type="date" id="fechaEstimada" [(ngModel)]="nuevaTarea.fechaEstimada" name="fechaEstimada" required />
 
       <label for="asignadoA">Asignado a:</label>
-<select id="asignadoA" [(ngModel)]="nuevaTarea.empleadoTO.id" name="asignadoA" required>
-    <option *ngFor="let empleado of empleados" [value]="empleado.id">
-        {{ empleado.nombre }}
-    </option>
-</select>
+      <select id="asignadoA" [(ngModel)]="nuevaTarea.empleadoTO.id" name="asignadoA" required>
+        <option *ngFor="let empleado of empleados" [value]="empleado.id">
+          {{ empleado.nombre }}
+        </option>
+      </select>
 
       <!-- Botones Guardar y Cancelar -->
       <br><br>
@@ -67,7 +109,7 @@
       <td>{{ tarea.empleadoTO.nombre || 'Sin asignar' }}</td>
       <td>
         <!-- Botones Editar y Eliminar -->
-     <button (click)="abrirFormularioEditar(tarea)">Editar</button> 
+        <button (click)="abrirFormularioEditar(tarea)">Editar</button>
         <button (click)="deleteTarea(tarea.id)">Eliminar</button>
       </td>
     </tr>

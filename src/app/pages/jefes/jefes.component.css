@@ -204,22 +204,24 @@ button {
 
 /* Contenedor principal para las búsquedas */
 .busquedas {
-  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 20px; 
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
   max-width: 1200px;
-  margin: 0 auto; 
+  margin: 0 auto;
 }
 
 /* Estilo para cada campo de búsqueda */
 .busquedas div {
   display: flex;
   flex-direction: column;
-  gap: 15px; 
+  gap: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 10px;
   margin-bottom: 20px;
 }
 
@@ -234,7 +236,7 @@ button {
 /* Estilo para los campos de entrada */
 .busquedas input[type="text"],
 .busquedas input[type="number"] {
-  width: 90%;
+  width: 85%;
   padding: 12px;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -260,12 +262,10 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 90%;
   margin-top: 10px;
 }
 
 .busquedas button:hover {
   background-color: #0056b3;
 }
-
-
