@@ -30,7 +30,7 @@ export class JefeService {
   updateJefe(id: number, jefe: Trabajador): Observable<Trabajador> {
     return this.http.put<Trabajador>(`${this.apiURL}/${id}`, jefe);
   }
-  
+
   //Obtener todos los Jefes
   getAllJefes(): Observable<Trabajador[]> {
     return this.http.get<Trabajador[]>(this.apiURL);
@@ -41,12 +41,30 @@ export class JefeService {
     return this.http.get<Trabajador>(`${this.apiURL}/${id}`)
   }
 
+  //Buscar por nombre
+  searchByName(nombre: string): Observable<Trabajador[]> {
+    return this.http.get<Trabajador[]>(`${this.apiURL}/nombre/${nombre}`);
+  }
 
+  //Buscar por edad
+  searchByEdad(edad: number): Observable<Trabajador[]> {
+    return this.http.get<Trabajador[]>(`${this.apiURL}/edad/${edad}`);
+  }
 
+  //Buscar por salario superior a x
+  searchBySuperiorASalario(salario: number): Observable<Trabajador[]> {
+    return this.http.get<Trabajador[]>(`${this.apiURL}/salariosup/${salario}`);
+  }
 
+  //Buscar por salario inferior a x
+  searchByInferiorASalario(salario: number): Observable<Trabajador[]> {
+    return this.http.get<Trabajador[]>(`${this.apiURL}/salariosinf/${salario}`);
+  }
 
-
-
-
-
+  //Buscar entre salarios
+  findByEntreSalarios(salarioA: number, salarioB: number): Observable<Trabajador[]> {
+    return this.http.get<Trabajador[]>(
+      `${this.apiURL}/salariosbet/${salarioA}/${salarioB}`
+    );
+  }
 }

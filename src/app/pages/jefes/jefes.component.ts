@@ -23,7 +23,6 @@ export class JefesComponent implements OnInit {
   }
 
   //CRUD
-
   // Método para crear o actualizar un nuevo jefe
   saveJefe(): void {
     // Si el id existe actualizamos, si no, creamos uno nuevo
@@ -94,5 +93,86 @@ export class JefesComponent implements OnInit {
       }
     });
   }
+  //----------------------------------------------------------------------------------------
+  /*BÚSQUEDAS*/
 
+  //Por nombre
+  searchByName(): void {
+    // Si el campo de búsqueda está vacío, mostramos todos los jefes
+    if (!this.nuevoJefe.nombre.trim()) { //Trim quita espacios al principio y al final de la cadena
+      this.getAllJefes();
+      return;
+    }
+
+    this.jefeService.searchByName(this.nuevoJefe.nombre).subscribe({
+      next: (result) => (this.jefes = result),
+    });
+  }
+
+  //Por edad
+  searchByEdad(): void {
+    // Si el campo de búsqueda está vacío, mostramos una lista
+    if (!this.nuevoJefe.edad) {
+      this.getAllJefes();
+      return;
+    }
+
+    this.jefeService.searchByEdad(this.nuevoJefe.edad).subscribe({
+      next: (result) => (this.jefes = result),
+    });
+  }
+
+
+  //MÉTODOS DE BÚSQUEDA POR SALARIO
+  //Esto lo hemos hecho para que no referencien al mismo atributo salario, y así no duplicar el input en ambos
+  salarioSuperior: number | null = null; 
+  salarioInferior: number | null = null; 
+  
+  // Por salario superior a x
+  searchBySuperiorASalario(): void { //Si no hay salario, se muestra toda la lista.
+    if (this.salarioSuperior === null) {
+      this.getAllJefes();
+      return;
+    }
+  
+    this.jefeService.searchBySuperiorASalario(this.salarioSuperior).subscribe({
+      next: (result) => (this.jefes = result),
+    });
+  }
+  
+  // Por salario superior a x
+  searchByInferiorASalario(): void {
+    if (this.salarioInferior === null) {
+      this.getAllJefes();
+      return;
+    }
+  
+    this.jefeService.searchByInferiorASalario(this.salarioInferior).subscribe({
+      next: (result) => (this.jefes = result),
+    });
+  }
+  
+
+
+  //Variables para el salario mínimo y el máximo
+  salarioMinimo: number = 0; 
+  salarioMaximo: number = 0; 
+  
+  // Entre salarios
+  buscarPorRangoDeSalarios(): void {
+    // Verificamos que no sean nulos y que el mínimo nunca puede ser mayor que máximo
+    if (this.salarioMinimo !== null && this.salarioMaximo !== null && this.salarioMinimo > this.salarioMaximo) {
+      alert('Introduce salarios válidos.');
+      return;
+    }
+    
+  
+    // Llamamos al servicio para realizar la búsqueda
+    this.jefeService.findByEntreSalarios(this.salarioMinimo, this.salarioMaximo).subscribe({
+      next: (jefes) => {
+        this.jefes = jefes;
+      },
+    });
+  }
+  
 }
