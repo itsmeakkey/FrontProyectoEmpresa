@@ -182,7 +182,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('Error al filtrar tareas entregadas a tiempo: ' + err.message),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 
@@ -192,7 +192,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('No se han encontrado fechas'),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 
@@ -202,7 +202,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('No se han encontrado fechas'),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 
@@ -212,7 +212,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('No se han encontrado fechas'),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 
@@ -222,7 +222,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('No se han encontrado fechas'),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 
@@ -232,7 +232,7 @@ export class TareasComponent implements OnInit {
       next: (data) => {
         this.tareas = data;
       },
-      error: (err) => alert('No se han encontrado fechas'),
+      error: (err) => alert('No se han encontrado datos.'),
     });
   }
 }
